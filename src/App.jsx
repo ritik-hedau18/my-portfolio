@@ -52,7 +52,7 @@ const skills = {
 
 const navLinks = ["About", "Skills", "Projects", "Contact"];
 
-// Scroll animation hook
+
 function useFadeIn() {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -105,7 +105,7 @@ function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-// Typing animation for hero
+
 function TypedText({ text }) {
   const [displayed, setDisplayed] = useState("");
   useEffect(() => {
@@ -125,7 +125,6 @@ function TypedText({ text }) {
   );
 }
 
-// Project card with hover effect
 function ProjectCard({ p, index }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -187,7 +186,7 @@ function ProjectCard({ p, index }) {
   );
 }
 
-// Skill group with hover
+
 function SkillGroup({ group, items, index }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -259,7 +258,7 @@ export default function Portfolio() {
         .contact-btn:hover { opacity: 0.85; transform: translateY(-1px); transition: all 0.2s; }
       `}</style>
 
-      {/* NAV */}
+      
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -290,26 +289,26 @@ export default function Portfolio() {
         }}>GitHub</a>
       </nav>
 
-      {/* HERO */}
+      
       <section style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         padding: "80px 5% 40px", position: "relative", overflow: "hidden",
       }}>
-        {/* Animated grid background */}
+        
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `linear-gradient(${COLORS.border}44 1px, transparent 1px), linear-gradient(90deg, ${COLORS.border}44 1px, transparent 1px)`,
           backgroundSize: "40px 40px", opacity: 0.4, zIndex: 1,
           maskImage: "radial-gradient(ellipse at 30% 50%, black 20%, transparent 75%)",
         }} />
-        {/* Glow orb */}
+        
         <div style={{
           position: "absolute", top: "10%", right: "-5%", width: "55%", aspectRatio: "1",
           background: `radial-gradient(circle at 60% 40%, ${COLORS.accent}18 0%, transparent 65%)`,
           borderRadius: "50%", pointerEvents: "none", zIndex: 1,
           animation: "float 6s ease-in-out infinite",
         }} />
-        {/* Second orb */}
+        
         <div style={{
           position: "absolute", bottom: "10%", left: "20%", width: "30%", aspectRatio: "1",
           background: `radial-gradient(circle, ${COLORS.gold}08 0%, transparent 70%)`,
@@ -419,9 +418,9 @@ export default function Portfolio() {
                   </div>
                 </div>
                 {[
-                  { num: "3+", label: "Production-grade Projects", icon: "🚀" },
-                  { num: "20+", label: "Technologies & Tools", icon: "⚙️" },
-                  { num: "5+", label: "Microservices Built", icon: "🔧" },
+                  { num: "5+", label: "Production-grade Projects", icon: "🚀" },
+                  { num: "30+", label: "Technologies & Tools", icon: "⚙️" },
+                  { num: "20+", label: "Microservices Built", icon: "🔧" },
                   { num: "2+", label: "Years of Hands-on Java", icon: "☕" },
                 ].map((stat, i) => (
                   <div key={stat.label} className="stat-card" style={{
@@ -471,7 +470,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* WHAT I BRING — replaces recommendations */}
+      {/* What I Bring */}
       <section id="highlights" style={{ borderBottom: `1px solid ${COLORS.border}` }}>
         <div style={{ padding: "80px 5%", maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
@@ -506,9 +505,9 @@ export default function Portfolio() {
                 desc: "Docker, environment configs, proper error handling — my projects are built to be deployed, not just demonstrated locally.",
               },
               {
-                icon: "📈",
-                title: "Fast Learner",
-                desc: "Picked up Kafka, Redis, Spring Cloud, and React independently while building real projects. I learn by shipping.",
+                icon: "📅",
+                title: "Consistent Learner",
+                desc: "I focus on steady progress every day, improving my skills step by step with discipline and dedication."
               },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.08}>
