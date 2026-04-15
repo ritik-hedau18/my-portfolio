@@ -31,15 +31,6 @@ const projects = [
     highlight: false,
     tag: "REST API",
   },
-  {
-    name: "MediCore",
-    full: "Hospital Management System",
-    desc: "Multi-role hospital management platform with ADMIN, DOCTOR, and PATIENT access control. Includes appointment scheduling, patient records management, and a fully secured JWT authentication layer.",
-    tech: ["Java", "Spring Boot", "PostgreSQL", "Spring Security", "JWT", "Lombok", "ModelMapper"],
-    github: "https://github.com/ritik-hedau18",
-    highlight: false,
-    tag: "Full Stack",
-  },
 ];
 
 const skills = {
@@ -47,10 +38,10 @@ const skills = {
   "Messaging & Cache": ["Apache Kafka", "Redis", "Event-Driven Architecture"],
   "Databases": ["PostgreSQL", "MySQL", "MongoDB"],
   "DevOps & Tools": ["Docker", "Git", "GitHub", "Postman", "IntelliJ IDEA"],
-  "Frontend": ["React", "JavaScript", "HTML5", "CSS3"],
+  "Frontend": ["React", "JavaScript", "TypeScript", "HTML5", "CSS3"],
 };
 
-const navLinks = ["About", "Skills", "Projects", "Contact"];
+const navLinks = ["About", "Skills", "Projects", "Experience", "Contact"];
 
 
 function useFadeIn() {
@@ -258,7 +249,7 @@ export default function Portfolio() {
         .contact-btn:hover { opacity: 0.85; transform: translateY(-1px); transition: all 0.2s; }
       `}</style>
 
-      
+      {/* NAV */}
       <nav style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -289,26 +280,23 @@ export default function Portfolio() {
         }}>GitHub</a>
       </nav>
 
-      
+      {/* HERO */}
       <section style={{
         minHeight: "100vh", display: "flex", alignItems: "center",
         padding: "80px 5% 40px", position: "relative", overflow: "hidden",
       }}>
-        
         <div style={{
           position: "absolute", inset: 0,
           backgroundImage: `linear-gradient(${COLORS.border}44 1px, transparent 1px), linear-gradient(90deg, ${COLORS.border}44 1px, transparent 1px)`,
           backgroundSize: "40px 40px", opacity: 0.4, zIndex: 1,
           maskImage: "radial-gradient(ellipse at 30% 50%, black 20%, transparent 75%)",
         }} />
-        
         <div style={{
           position: "absolute", top: "10%", right: "-5%", width: "55%", aspectRatio: "1",
           background: `radial-gradient(circle at 60% 40%, ${COLORS.accent}18 0%, transparent 65%)`,
           borderRadius: "50%", pointerEvents: "none", zIndex: 1,
           animation: "float 6s ease-in-out infinite",
         }} />
-        
         <div style={{
           position: "absolute", bottom: "10%", left: "20%", width: "30%", aspectRatio: "1",
           background: `radial-gradient(circle, ${COLORS.gold}08 0%, transparent 70%)`,
@@ -324,7 +312,7 @@ export default function Portfolio() {
             animation: "heroFadeIn 0.5s ease both",
           }}>
             <span style={{ width: 7, height: 7, borderRadius: "50%", background: COLORS.accent, display: "inline-block", animation: "pulse 2s infinite" }} />
-            Open to Java Developer roles
+            Open to Java Full Stack Developer roles
           </div>
 
           <h1 style={{
@@ -363,7 +351,7 @@ export default function Portfolio() {
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
               display: "inline-flex", alignItems: "center", gap: 8,
             }}>View Projects →</button>
-            <a href="https://drive.google.com/file/d/1vWTEr30B-92LcojtU4_6pZVCjRXhdCn7/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
+            <a href="/resume.pdf" target="_blank" rel="noreferrer" style={{
               background: "transparent", color: COLORS.text, border: `1px solid ${COLORS.border}`,
               borderRadius: 8, padding: "12px 28px", fontSize: 15, fontWeight: 400,
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
@@ -401,41 +389,27 @@ export default function Portfolio() {
               </div>
             </FadeIn>
             <FadeIn delay={0.2}>
-              <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
-                  <div style={{ position: "relative" }}>
-                    <div style={{
-                      position: "absolute", inset: -4, borderRadius: "50%",
-                      background: `conic-gradient(${COLORS.accent}, ${COLORS.gold}, ${COLORS.accent})`,
-                      animation: "gradientShift 3s linear infinite",
-                      backgroundSize: "200% 200%",
-                    }} />
-                    <img
-                      src="https://avatars.githubusercontent.com/u/250507116?v=4"
-                      alt="Ritik Hedau"
-                      style={{ width: 120, height: 120, borderRadius: "50%", border: `4px solid ${COLORS.bg}`, objectFit: "cover", display: "block", position: "relative" }}
-                    />
-                  </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center" }}>
+                <div style={{ position: "relative", marginBottom: 8 }}>
+                  <div style={{
+                    position: "absolute", inset: -4, borderRadius: "50%",
+                    background: `conic-gradient(${COLORS.accent}, ${COLORS.gold}, ${COLORS.accent})`,
+                    animation: "gradientShift 3s linear infinite",
+                    backgroundSize: "200% 200%",
+                  }} />
+                  <img
+                    src="https://avatars.githubusercontent.com/u/250507116?v=4"
+                    alt="Ritik Hedau"
+                    style={{ width: 120, height: 120, borderRadius: "50%", border: `4px solid ${COLORS.bg}`, objectFit: "cover", display: "block", position: "relative" }}
+                  />
                 </div>
-                {[
-                  { num: "5+", label: "Production-grade Projects", icon: "🚀" },
-                  { num: "30+", label: "Technologies & Tools", icon: "⚙️" },
-                  { num: "20+", label: "Microservices Built", icon: "🔧" },
-                  { num: "2+", label: "Years of Hands-on Java", icon: "☕" },
-                ].map((stat, i) => (
-                  <div key={stat.label} className="stat-card" style={{
-                    background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
-                    borderRadius: 12, padding: "18px 24px",
-                    display: "flex", justifyContent: "space-between", alignItems: "center",
-                    transition: "all 0.25s ease", cursor: "default",
-                  }}>
-                    <div>
-                      <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 32, fontWeight: 700, color: COLORS.accent, lineHeight: 1 }}>{stat.num}</div>
-                      <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 4 }}>{stat.label}</div>
-                    </div>
-                    <span style={{ fontSize: 28 }}>{stat.icon}</span>
-                  </div>
-                ))}
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, fontWeight: 700, color: COLORS.text }}>Ritik Hedau</div>
+                  <div style={{ fontSize: 14, color: COLORS.accent, marginTop: 4 }}>Java Full Stack Developer</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 4 }}>📍 Nagpur, Maharashtra</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 2 }}>🎓 B.Tech · RGPV University</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 2 }}>💼 2+ Years Experience</div>
+                </div>
               </div>
             </FadeIn>
           </div>
@@ -467,6 +441,62 @@ export default function Portfolio() {
           <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
             {projects.map((p, i) => <ProjectCard key={p.name} p={p} index={i} />)}
           </div>
+        </div>
+      </section>
+
+      {/* EXPERIENCE */}
+      <section id="experience" style={{ borderBottom: `1px solid ${COLORS.border}` }}>
+        <div style={{ padding: "80px 5%", maxWidth: 1100, margin: "0 auto" }}>
+          <FadeIn>
+            <div style={{ fontFamily: "'Fira Code', monospace", fontSize: 13, color: COLORS.accent, letterSpacing: 2, textTransform: "uppercase", marginBottom: 12 }}>// experience</div>
+            <h2 style={{ fontFamily: "'Syne', sans-serif", fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700, letterSpacing: "-1px", margin: "0 0 48px", color: COLORS.text }}>Work Experience</h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <div style={{
+              background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
+              borderRadius: 16, padding: "36px 40px", position: "relative", overflow: "hidden",
+            }}>
+              <div style={{
+                position: "absolute", top: 0, left: 0, width: 3, height: "100%",
+                background: `linear-gradient(180deg, ${COLORS.accent}, ${COLORS.accent}22)`,
+                borderRadius: "3px 0 0 3px",
+              }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 12, marginBottom: 8 }}>
+                <div>
+                  <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 22, fontWeight: 700, color: COLORS.text, marginBottom: 4 }}>
+                    Java Software Developer
+                  </div>
+                  <div style={{ fontSize: 15, color: COLORS.accent, fontWeight: 500 }}>
+                    Emizen Tech · Full-time · Hybrid
+                  </div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  <div style={{
+                    fontFamily: "'Fira Code', monospace", fontSize: 13,
+                    color: COLORS.textMuted, background: COLORS.accentDim,
+                    border: `1px solid ${COLORS.accent}33`, borderRadius: 6,
+                    padding: "4px 12px",
+                  }}>Dec 2023 – Present</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 6 }}>Pune, Maharashtra · Remote</div>
+                </div>
+              </div>
+              <div style={{ width: "100%", height: 1, background: COLORS.border, margin: "20px 0" }} />
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {[
+                  "Developed and maintained production-grade REST APIs using Java and Spring Boot, handling business logic, request validation, and exception management across distributed microservices.",
+                  "Integrated Spring Data JPA and Hibernate for ORM-based database operations on PostgreSQL and MySQL, writing optimized queries for data retrieval and persistence.",
+                  "Implemented Spring Security with JWT authentication to secure API endpoints, supporting role-based access control across multiple services.",
+                  "Collaborated with front-end teams to deliver full stack features, contributing to UI integration using JavaScript and React.js alongside backend API contracts.",
+                  "Managed source control using Git/GitHub, dependency builds with Maven, and end-to-end API testing and debugging with Postman.",
+                ].map((point, i) => (
+                  <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
+                    <span style={{ color: COLORS.accent, fontSize: 16, marginTop: 2, flexShrink: 0 }}>▹</span>
+                    <span style={{ fontSize: 15, lineHeight: 1.7, color: COLORS.textMuted }}>{point}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -507,7 +537,7 @@ export default function Portfolio() {
               {
                 icon: "📅",
                 title: "Consistent Learner",
-                desc: "I focus on steady progress every day, improving my skills step by step with discipline and dedication."
+                desc: "I focus on steady progress every day, improving my skills step by step with discipline and dedication.",
               },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.08}>
@@ -530,7 +560,6 @@ export default function Portfolio() {
               background: COLORS.bgCard, border: `1px solid ${COLORS.border}`,
               borderRadius: 20, padding: "56px 48px", textAlign: "center", position: "relative", overflow: "hidden",
             }}>
-              {/* Top accent line */}
               <div style={{
                 position: "absolute", top: 0, left: "20%", right: "20%", height: 2,
                 background: `linear-gradient(90deg, transparent, ${COLORS.accent}, transparent)`,
