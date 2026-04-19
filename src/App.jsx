@@ -14,6 +14,15 @@ const COLORS = {
 
 const projects = [
   {
+    name: "SRIJAN",
+    full: "Spring AI: Real-time Intelligent Java App Narrator",
+    desc: "AI-powered Spring Boot code generator inspired by Lovable. Features a React frontend with Monaco Editor and split chat-plus-editor layout, Spring AI integration with prompt engineering and ChatMemory, and free-tier deployment on Netlify and Railway.",
+    tech: ["Java 17", "Spring Boot 3", "Spring AI", "React", "Monaco Editor", "PostgreSQL", "JWT", "Docker", "Netlify", "Railway"],
+    github: "https://github.com/ritik-hedau18/SRIJAN",
+    highlight: true,
+    tag: "AI + Full Stack",
+  },
+  {
     name: "TRACE",
     full: "Transaction Risk & Anomaly Classification Engine",
     desc: "Real-time fraud detection system processing financial transactions using event-driven microservices. Features a weighted rule-based risk engine with 5 fraud detection rules, JWT auth, and real-time Kafka event streaming.",
@@ -34,7 +43,7 @@ const projects = [
 ];
 
 const skills = {
-  "Backend": ["Java 17", "Spring Boot 3", "Spring Security 6", "Spring Cloud", "REST APIs", "Microservices", "JWT", "Hibernate", "JPA"],
+  "Backend": ["Java 17", "Spring Boot", "Spring AI", "Spring Security 6", "Spring Cloud", "REST APIs", "Microservices", "JWT", "Hibernate", "JPA"],
   "Messaging & Cache": ["Apache Kafka", "Redis", "Event-Driven Architecture"],
   "Databases": ["PostgreSQL", "MySQL", "MongoDB"],
   "DevOps & Tools": ["Docker", "Git", "GitHub", "Postman", "IntelliJ IDEA"],
@@ -43,6 +52,8 @@ const skills = {
 
 const navLinks = ["About", "Skills", "Projects", "Experience", "Contact"];
 
+const EMAIL = "ritikhedau18@gmail.com";
+const MAILTO = `mailto:${EMAIL}?subject=Opportunity%20for%20Java%20Full%20Stack%20Developer&body=Hi%20Ritik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect%20regarding%20a%20Java%20Full%20Stack%20Developer%20opportunity.%0A%0ACompany%3A%20%5BYour%20Company%5D%0ARole%3A%20%5BPosition%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ARegards%2C%0A%5BYour%20Name%5D`;
 
 function useFadeIn() {
   const ref = useRef(null);
@@ -95,7 +106,6 @@ function useScrollSpy() {
 function scrollTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-
 
 function TypedText({ text }) {
   const [displayed, setDisplayed] = useState("");
@@ -177,7 +187,6 @@ function ProjectCard({ p, index }) {
   );
 }
 
-
 function SkillGroup({ group, items, index }) {
   const [hovered, setHovered] = useState(false);
   return (
@@ -224,7 +233,7 @@ export default function Portfolio() {
   }, []);
 
   const copyEmail = () => {
-    navigator.clipboard.writeText("ritikhedau18@gmail.com");
+    navigator.clipboard.writeText(EMAIL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -247,6 +256,7 @@ export default function Portfolio() {
         .nav-link-hover:hover { color: #00C896 !important; background: #00C89622 !important; }
         .stat-card:hover { border-color: #00C89644 !important; background: #111E33 !important; }
         .contact-btn:hover { opacity: 0.85; transform: translateY(-1px); transition: all 0.2s; }
+        .email-link:hover { color: #00C896 !important; border-color: #00C89644 !important; }
       `}</style>
 
       {/* NAV */}
@@ -351,7 +361,7 @@ export default function Portfolio() {
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
               display: "inline-flex", alignItems: "center", gap: 8,
             }}>View Projects →</button>
-            <a href="https://drive.google.com/file/d/1Dc46-9F4eSS8g3i_oNgFF9XBH-rGtSG_/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
+            <a href="https://drive.google.com/file/d/1_wyaTZ7gsSPo_0bjfmGFyiM88K-psptS/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
               background: "transparent", color: COLORS.text, border: `1px solid ${COLORS.border}`,
               borderRadius: 8, padding: "12px 28px", fontSize: 15, fontWeight: 400,
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
@@ -476,7 +486,7 @@ export default function Portfolio() {
                     color: COLORS.textMuted, background: COLORS.accentDim,
                     border: `1px solid ${COLORS.accent}33`, borderRadius: 6,
                     padding: "4px 12px",
-                  }}>Dec 2023 – Present</div>
+                  }}>April 2024 – Present</div>
                   <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 6 }}>Pune, Maharashtra · Remote</div>
                 </div>
               </div>
@@ -500,7 +510,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* What I Bring */}
+      {/* WHAT I BRING — "Consistent Learner" card removed */}
       <section id="highlights" style={{ borderBottom: `1px solid ${COLORS.border}` }}>
         <div style={{ padding: "80px 5%", maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
@@ -534,11 +544,6 @@ export default function Portfolio() {
                 title: "Production Mindset",
                 desc: "Docker, environment configs, proper error handling — my projects are built to be deployed, not just demonstrated locally.",
               },
-              {
-                icon: "📅",
-                title: "Consistent Learner",
-                desc: "I focus on steady progress every day, improving my skills step by step with discipline and dedication.",
-              },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.08}>
                 <HighlightCard item={item} />
@@ -569,9 +574,37 @@ export default function Portfolio() {
               <p style={{ fontFamily: "'Syne', sans-serif", fontSize: 36, fontWeight: 700, letterSpacing: "-1px", marginBottom: 12, color: COLORS.text, position: "relative" }}>
                 Open to Opportunities
               </p>
-              <p style={{ fontSize: 16, color: COLORS.textMuted, marginBottom: 40, position: "relative" }}>
+              <p style={{ fontSize: 16, color: COLORS.textMuted, marginBottom: 32, position: "relative" }}>
                 Looking for Java Full Stack Developer roles. Let's talk.
               </p>
+
+              {/* Visible email with mailto boilerplate */}
+              <div style={{ marginBottom: 36, position: "relative" }}>
+                <a
+                  href={MAILTO}
+                  className="email-link"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 10,
+                    padding: "14px 28px",
+                    border: `1px solid ${COLORS.border}`,
+                    borderRadius: 10,
+                    textDecoration: "none",
+                    color: COLORS.text,
+                    fontSize: 16,
+                    fontFamily: "'Fira Code', monospace",
+                    transition: "all 0.25s",
+                    background: COLORS.bgCardHover,
+                  }}
+                >
+                  <span style={{ fontSize: 18 }}>✉</span>
+                  {EMAIL}
+                  <span style={{ fontSize: 12, color: COLORS.textMuted, marginLeft: 4 }}>↗</span>
+                </a>
+                <div style={{ marginTop: 10, fontSize: 13, color: COLORS.textMuted }}>
+                  Click to open email client with a pre-filled message
+                </div>
+              </div>
+
               <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap", position: "relative" }}>
                 <button className="contact-btn" onClick={copyEmail} style={{
                   background: COLORS.accent, color: "#070D1A", border: "none",
