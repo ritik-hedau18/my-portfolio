@@ -361,7 +361,7 @@ export default function Portfolio() {
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
               display: "inline-flex", alignItems: "center", gap: 8,
             }}>View Projects →</button>
-            <a href="https://drive.google.com/file/d/1NrIIRsCqQ_WC90cm1U-6U01Sk8ieR7xa/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
+            <a href="https://drive.google.com/file/d/1S3Sm157_q3O3IS0ibYKJcM_Eoe9_R7W8/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
               background: "transparent", color: COLORS.text, border: `1px solid ${COLORS.border}`,
               borderRadius: 8, padding: "12px 28px", fontSize: 15, fontWeight: 400,
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
