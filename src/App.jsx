@@ -12,12 +12,11 @@ const COLORS = {
   border: "#1A2840",
 };
 
-// ─── UPDATED: SRIJAN tech stack + desc, TRACE tech stack + desc ───
 const projects = [
   {
     name: "SRIJAN",
     full: "Spring AI: Real-time Intelligent Java App Narrator",
-    desc: "AI-powered code generator where users describe a Spring Boot application in natural language and receive fully structured, downloadable Java project files. Features multi-turn conversation memory, JWT-secured auth, and a React + TypeScript frontend with Monaco Editor.",
+    desc: "AI-powered code generator where users describe a Spring Boot application in natural language and receive fully structured, downloadable Java project files. Integrates Groq's LLaMA 70B via Spring AI's OpenAI-compatible adapter with multi-turn conversation memory using MessageChatMemoryAdvisor and session-scoped context stored in PostgreSQL.",
     tech: ["Java 17", "Spring Boot 3", "Spring AI", "Groq LLaMA 70B", "React", "TypeScript", "Monaco Editor", "PostgreSQL", "JWT", "Docker", "AWS"],
     github: "https://github.com/ritik-hedau18/SRIJAN",
     highlight: true,
@@ -26,7 +25,7 @@ const projects = [
   {
     name: "TRACE",
     full: "Transaction Risk & Anomaly Classification Engine",
-    desc: "Real-time fraud detection system across 7 microservices using Spring Cloud, Eureka, and Kafka for async event streaming. Features a 5-rule weighted scoring engine with Redis velocity checks, full Kubernetes orchestration, and hybrid PostgreSQL + MongoDB storage.",
+    desc: "Real-time fraud detection system across 7 microservices using Spring Cloud, Eureka, and Kafka for async event streaming. Features a 5-rule weighted scoring engine with Redis velocity checks for burst fraud detection. Orchestrated with Kubernetes — managing Deployments, Services, and ConfigMaps — secured with JWT + Spring Security 6.",
     tech: ["Java 17", "Spring Boot 3.2", "Kafka", "Redis", "PostgreSQL", "MongoDB", "Docker", "Kubernetes", "Spring Security 6", "Eureka", "JWT"],
     github: "https://github.com/ritik-hedau18/TRACE-Transaction-Risk-and-Anomaly-Classification-Engine",
     highlight: true,
@@ -43,13 +42,12 @@ const projects = [
   },
 ];
 
-// ─── UPDATED: DevOps & Tools → Cloud & DevOps, AWS + Kubernetes added, Tailwind + Maven added ───
 const skills = {
   "Backend": ["Java 17", "Spring Boot", "Spring AI", "Spring Security 6", "Spring Cloud", "REST APIs", "Microservices", "JWT", "Hibernate", "JPA"],
   "Messaging & Cache": ["Apache Kafka", "Redis", "Event-Driven Architecture"],
   "Databases": ["PostgreSQL", "MySQL", "MongoDB"],
-  "Cloud & DevOps": ["AWS (EC2, S3, RDS)", "Kubernetes", "Docker", "Git", "GitHub", "Maven", "Postman"],
-  "Frontend": ["React", "JavaScript", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
+  "Cloud & DevOps": ["AWS (EC2, S3, RDS, IAM, CloudWatch, SNS, SQS)", "Kubernetes", "Docker", "CI/CD", "Git", "GitHub", "Maven"],
+  "Frontend": ["React.js", "TypeScript", "JavaScript", "Tailwind CSS", "React Query", "Context API", "Redux", "HTML5", "CSS3"],
 };
 
 const navLinks = ["About", "Skills", "Projects", "Experience", "Contact"];
@@ -345,7 +343,6 @@ export default function Portfolio() {
             <TypedText text="Java Full Stack Developer" />
           </p>
 
-          {/* ─── UPDATED: Hero description — full stack + AI + cloud + Kubernetes ─── */}
           <p style={{
             fontSize: 16, lineHeight: 1.75, color: COLORS.textMuted,
             maxWidth: 560, margin: "0 0 40px",
@@ -389,13 +386,12 @@ export default function Portfolio() {
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
             <FadeIn delay={0.1}>
-              {/* ─── UPDATED: About paragraphs — Spring AI, AWS, Kubernetes added ─── */}
               <div>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: COLORS.textMuted, margin: "0 0 16px" }}>
-                  I'm a Java Full Stack Developer with 2+ years of hands-on experience delivering backend-driven web applications using Java, Spring Boot, and microservices architecture. I work across the full stack — from secure REST APIs and Spring Security 6 to React and TypeScript frontends.
+                  I'm a Java Full Stack Developer with 2+ years of hands-on experience building and shipping end-to-end web applications — from Spring Boot microservices and event-driven backends to responsive React frontends with TypeScript and Tailwind CSS.
                 </p>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: COLORS.textMuted, margin: "0 0 16px" }}>
-                  I build AI-integrated backends using Spring AI, deploy containerized microservices with Docker and Kubernetes, and manage cloud infrastructure on AWS — covering EC2, S3, and RDS. My flagship project TRACE is a real-time fraud detection system built with the same distributed architecture patterns used in real fintech companies.
+                  I build AI-integrated backends using Spring AI, deploy containerized microservices with Docker and Kubernetes, and manage cloud infrastructure on AWS — covering EC2, S3, RDS, IAM, CloudWatch, SNS, and SQS. My flagship project TRACE is a real-time fraud detection system built with the same distributed architecture patterns used in real fintech companies.
                 </p>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: COLORS.textMuted, margin: 0 }}>
                   I care deeply about clean architecture, scalable system design, and writing code that is maintainable, secure, and built to last in production.
@@ -421,7 +417,7 @@ export default function Portfolio() {
                   <div style={{ fontFamily: "'Syne', sans-serif", fontSize: 20, fontWeight: 700, color: COLORS.text }}>Ritik Hedau</div>
                   <div style={{ fontSize: 14, color: COLORS.accent, marginTop: 4 }}>Java Full Stack Developer</div>
                   <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 4 }}>📍 Nagpur, Maharashtra</div>
-                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 2 }}>🎓 B.Tech · RGPV University</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 2 }}>🎓 B.Tech · RGPV University · 2022</div>
                   <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 2 }}>💼 2+ Years Experience</div>
                 </div>
               </div>
@@ -495,14 +491,13 @@ export default function Portfolio() {
                 </div>
               </div>
               <div style={{ width: "100%", height: 1, background: COLORS.border, margin: "20px 0" }} />
-              {/* ─── UPDATED: Experience bullets matching resume exactly ─── */}
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {[
-                  "Developed and maintained production-grade REST APIs using Java and Spring Boot, handling business logic, request validation, and exception management across distributed microservices.",
-                  "Integrated Spring Data JPA and Hibernate for ORM-based database operations on PostgreSQL and MySQL with optimized queries for data retrieval and persistence.",
-                  "Implemented Spring Security 6 with JWT authentication and role-based access control, deployed containerized services using Docker and Kubernetes, and managed cloud infrastructure on AWS (EC2, S3, RDS).",
-                  "Collaborated with front-end teams to deliver full stack features using React.js and TypeScript alongside backend API contracts.",
-                  "Managed source control using Git/GitHub, dependency builds with Maven, and API testing with Postman.",
+                  "Designed, built and delivered full-stack features end-to-end — developing React.js applications with TypeScript and Tailwind CSS, managing UI state with Context API and Redux, integrating REST APIs using React Query, and engineering robust Spring Boot backends.",
+                  "Designed database schemas and optimized PostgreSQL query performance through Spring Data JPA, Hibernate, targeted indexing, and fetch plan tuning — significantly reducing data retrieval latency under high-load conditions.",
+                  "Strengthened application security by implementing Spring Security 6 with JWT authentication and RBAC on the backend, paired with protected route flows and token-based auth handling on the React frontend.",
+                  "Containerized microservices with Docker, orchestrated deployments via Kubernetes, and provisioned AWS infrastructure (EC2, S3, RDS, IAM, CloudWatch, SNS, SQS) ensuring high availability, observability, and scalability across staging and production environments.",
+                  "Collaborated within an Agile development environment — contributing to sprint planning, daily stand-ups, code reviews, and retrospectives to ensure iterative delivery and consistent team alignment.",
                 ].map((point, i) => (
                   <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
                     <span style={{ color: COLORS.accent, fontSize: 16, marginTop: 2, flexShrink: 0 }}>▹</span>
@@ -515,7 +510,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* WHAT I BRING — updated with AI + Cloud cards ─── */}
+      {/* WHAT I BRING */}
       <section id="highlights" style={{ borderBottom: `1px solid ${COLORS.border}` }}>
         <div style={{ padding: "80px 5%", maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
@@ -532,27 +527,27 @@ export default function Portfolio() {
               {
                 icon: "🤖",
                 title: "AI-Integrated Backends",
-                desc: "SRIJAN integrates Groq's LLaMA 70B via Spring AI — multi-turn conversation memory, prompt engineering, and LLM-powered code generation end-to-end.",
+                desc: "SRIJAN integrates Groq's LLaMA 70B via Spring AI — multi-turn conversation memory using MessageChatMemoryAdvisor, prompt engineering, and LLM-powered code generation end-to-end.",
               },
               {
                 icon: "☁️",
                 title: "Cloud & Container Native",
-                desc: "AWS deployments (EC2, S3, RDS), Kubernetes orchestration, and Docker containerization — my projects are built to run in real cloud environments.",
+                desc: "AWS deployments across EC2, S3, RDS, IAM, CloudWatch, SNS, and SQS — plus Kubernetes orchestration and Docker containerization built for real cloud environments.",
               },
               {
                 icon: "🔐",
                 title: "Security by Default",
-                desc: "Every project I ship has proper JWT auth, role-based access control, and Spring Security 6 integration — not bolted on after.",
+                desc: "Every project I ship has proper JWT auth, RBAC, and Spring Security 6 integration on both backend and React frontend — not bolted on after.",
               },
               {
                 icon: "⚡",
                 title: "Performance Aware",
-                desc: "Redis caching, lazy-loaded JPA queries, and Kafka async processing — I write code that stays fast under load.",
+                desc: "Redis caching, lazy-loaded JPA queries with fetch plan tuning, and Kafka async processing — I write code that stays fast under load.",
               },
               {
                 icon: "📦",
                 title: "Production Mindset",
-                desc: "Docker, environment configs, proper error handling — my projects are built to be deployed, not just demonstrated locally.",
+                desc: "Docker, CI/CD pipelines, Agile delivery, and proper error handling — my projects are built to be deployed and maintained, not just demonstrated locally.",
               },
             ].map((item, i) => (
               <FadeIn key={item.title} delay={i * 0.08}>
