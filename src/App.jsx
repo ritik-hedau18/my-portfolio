@@ -12,12 +12,13 @@ const COLORS = {
   border: "#1A2840",
 };
 
+// ─── UPDATED: SRIJAN tech stack + desc, TRACE tech stack + desc ───
 const projects = [
   {
     name: "SRIJAN",
     full: "Spring AI: Real-time Intelligent Java App Narrator",
-    desc: "AI-powered Spring Boot code generator inspired by Lovable. Features a React frontend with Monaco Editor and split chat-plus-editor layout, Spring AI integration with prompt engineering and ChatMemory, and free-tier deployment on Netlify and Railway.",
-    tech: ["Java 17", "Spring Boot 3", "Spring AI", "React", "Monaco Editor", "PostgreSQL", "JWT", "Docker", "Netlify", "Railway"],
+    desc: "AI-powered code generator where users describe a Spring Boot application in natural language and receive fully structured, downloadable Java project files. Features multi-turn conversation memory, JWT-secured auth, and a React + TypeScript frontend with Monaco Editor.",
+    tech: ["Java 17", "Spring Boot 3", "Spring AI", "Groq LLaMA 70B", "React", "TypeScript", "Monaco Editor", "PostgreSQL", "JWT", "Docker", "AWS"],
     github: "https://github.com/ritik-hedau18/SRIJAN",
     highlight: true,
     tag: "AI + Full Stack",
@@ -25,8 +26,8 @@ const projects = [
   {
     name: "TRACE",
     full: "Transaction Risk & Anomaly Classification Engine",
-    desc: "Real-time fraud detection system processing financial transactions using event-driven microservices. Features a weighted rule-based risk engine with 5 fraud detection rules, JWT auth, and real-time Kafka event streaming.",
-    tech: ["Java 17", "Spring Boot 3.2", "Kafka", "Redis", "PostgreSQL", "MongoDB", "Docker", "Spring Security 6", "Eureka", "JWT"],
+    desc: "Real-time fraud detection system across 7 microservices using Spring Cloud, Eureka, and Kafka for async event streaming. Features a 5-rule weighted scoring engine with Redis velocity checks, full Kubernetes orchestration, and hybrid PostgreSQL + MongoDB storage.",
+    tech: ["Java 17", "Spring Boot 3.2", "Kafka", "Redis", "PostgreSQL", "MongoDB", "Docker", "Kubernetes", "Spring Security 6", "Eureka", "JWT"],
     github: "https://github.com/ritik-hedau18/TRACE-Transaction-Risk-and-Anomaly-Classification-Engine",
     highlight: true,
     tag: "Microservices",
@@ -42,12 +43,13 @@ const projects = [
   },
 ];
 
+// ─── UPDATED: DevOps & Tools → Cloud & DevOps, AWS + Kubernetes added, Tailwind + Maven added ───
 const skills = {
   "Backend": ["Java 17", "Spring Boot", "Spring AI", "Spring Security 6", "Spring Cloud", "REST APIs", "Microservices", "JWT", "Hibernate", "JPA"],
   "Messaging & Cache": ["Apache Kafka", "Redis", "Event-Driven Architecture"],
   "Databases": ["PostgreSQL", "MySQL", "MongoDB"],
-  "DevOps & Tools": ["Docker", "Git", "GitHub", "Postman", "IntelliJ IDEA"],
-  "Frontend": ["React", "JavaScript", "TypeScript", "HTML5", "CSS3"],
+  "Cloud & DevOps": ["AWS (EC2, S3, RDS)", "Kubernetes", "Docker", "Git", "GitHub", "Maven", "Postman"],
+  "Frontend": ["React", "JavaScript", "TypeScript", "Tailwind CSS", "HTML5", "CSS3"],
 };
 
 const navLinks = ["About", "Skills", "Projects", "Experience", "Contact"];
@@ -343,12 +345,13 @@ export default function Portfolio() {
             <TypedText text="Java Full Stack Developer" />
           </p>
 
+          {/* ─── UPDATED: Hero description — full stack + AI + cloud + Kubernetes ─── */}
           <p style={{
             fontSize: 16, lineHeight: 1.75, color: COLORS.textMuted,
             maxWidth: 560, margin: "0 0 40px",
             animation: "heroFadeIn 0.6s ease 0.35s both",
           }}>
-            Building scalable, production-grade backend systems using Java & Spring Boot. I specialize in microservices architecture, event-driven systems with Kafka, and clean REST API design.
+            Building production-grade, AI-integrated full stack applications using Java, Spring Boot, and Spring AI. I specialize in event-driven microservices, cloud deployments on AWS, container orchestration with Kubernetes, and end-to-end delivery across Java backends and React frontends.
           </p>
 
           <div style={{
@@ -361,7 +364,7 @@ export default function Portfolio() {
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
               display: "inline-flex", alignItems: "center", gap: 8,
             }}>View Projects →</button>
-            <a href="https://drive.google.com/file/d/1_wyaTZ7gsSPo_0bjfmGFyiM88K-psptS/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
+            <a href="https://drive.google.com/file/d/1NrIIRsCqQ_WC90cm1U-6U01Sk8ieR7xa/view?usp=drivesdk" target="_blank" rel="noreferrer" style={{
               background: "transparent", color: COLORS.text, border: `1px solid ${COLORS.border}`,
               borderRadius: 8, padding: "12px 28px", fontSize: 15, fontWeight: 400,
               cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.2s",
@@ -386,15 +389,16 @@ export default function Portfolio() {
           </FadeIn>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
             <FadeIn delay={0.1}>
+              {/* ─── UPDATED: About paragraphs — Spring AI, AWS, Kubernetes added ─── */}
               <div>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: COLORS.textMuted, margin: "0 0 16px" }}>
-                  I'm a B.Tech graduate from RGPV University with hands-on experience building production-grade Java backend systems. I've worked across the full backend stack — from designing secure REST APIs and JWT-based auth systems to building event-driven microservices with Kafka and Redis.
+                  I'm a Java Full Stack Developer with 2+ years of hands-on experience delivering backend-driven web applications using Java, Spring Boot, and microservices architecture. I work across the full stack — from secure REST APIs and Spring Security 6 to React and TypeScript frontends.
                 </p>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: COLORS.textMuted, margin: "0 0 16px" }}>
-                  My flagship project TRACE is a real-time fraud detection system built with Spring Cloud microservices, Kafka event streaming, and Redis — the kind of architecture used in real fintech companies.
+                  I build AI-integrated backends using Spring AI, deploy containerized microservices with Docker and Kubernetes, and manage cloud infrastructure on AWS — covering EC2, S3, and RDS. My flagship project TRACE is a real-time fraud detection system built with the same distributed architecture patterns used in real fintech companies.
                 </p>
                 <p style={{ fontSize: 16, lineHeight: 1.8, color: COLORS.textMuted, margin: 0 }}>
-                  I care deeply about clean architecture, scalable system design, and writing backend code that is maintainable, testable, and built to last.
+                  I care deeply about clean architecture, scalable system design, and writing code that is maintainable, secure, and built to last in production.
                 </p>
               </div>
             </FadeIn>
@@ -487,17 +491,18 @@ export default function Portfolio() {
                     border: `1px solid ${COLORS.accent}33`, borderRadius: 6,
                     padding: "4px 12px",
                   }}>April 2024 – Present</div>
-                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 6 }}>Pune, Maharashtra · Remote</div>
+                  <div style={{ fontSize: 13, color: COLORS.textMuted, marginTop: 6 }}>Pune, Maharashtra · Hybrid</div>
                 </div>
               </div>
               <div style={{ width: "100%", height: 1, background: COLORS.border, margin: "20px 0" }} />
+              {/* ─── UPDATED: Experience bullets matching resume exactly ─── */}
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 {[
                   "Developed and maintained production-grade REST APIs using Java and Spring Boot, handling business logic, request validation, and exception management across distributed microservices.",
-                  "Integrated Spring Data JPA and Hibernate for ORM-based database operations on PostgreSQL and MySQL, writing optimized queries for data retrieval and persistence.",
-                  "Implemented Spring Security with JWT authentication to secure API endpoints, supporting role-based access control across multiple services.",
-                  "Collaborated with front-end teams to deliver full stack features, contributing to UI integration using JavaScript and React.js alongside backend API contracts.",
-                  "Managed source control using Git/GitHub, dependency builds with Maven, and end-to-end API testing and debugging with Postman.",
+                  "Integrated Spring Data JPA and Hibernate for ORM-based database operations on PostgreSQL and MySQL with optimized queries for data retrieval and persistence.",
+                  "Implemented Spring Security 6 with JWT authentication and role-based access control, deployed containerized services using Docker and Kubernetes, and managed cloud infrastructure on AWS (EC2, S3, RDS).",
+                  "Collaborated with front-end teams to deliver full stack features using React.js and TypeScript alongside backend API contracts.",
+                  "Managed source control using Git/GitHub, dependency builds with Maven, and API testing with Postman.",
                 ].map((point, i) => (
                   <div key={i} style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
                     <span style={{ color: COLORS.accent, fontSize: 16, marginTop: 2, flexShrink: 0 }}>▹</span>
@@ -510,7 +515,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* WHAT I BRING — "Consistent Learner" card removed */}
+      {/* WHAT I BRING — updated with AI + Cloud cards ─── */}
       <section id="highlights" style={{ borderBottom: `1px solid ${COLORS.border}` }}>
         <div style={{ padding: "80px 5%", maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
@@ -525,6 +530,16 @@ export default function Portfolio() {
                 desc: "I think in systems, not just features. TRACE is built with the same distributed architecture patterns used by fintech companies at scale.",
               },
               {
+                icon: "🤖",
+                title: "AI-Integrated Backends",
+                desc: "SRIJAN integrates Groq's LLaMA 70B via Spring AI — multi-turn conversation memory, prompt engineering, and LLM-powered code generation end-to-end.",
+              },
+              {
+                icon: "☁️",
+                title: "Cloud & Container Native",
+                desc: "AWS deployments (EC2, S3, RDS), Kubernetes orchestration, and Docker containerization — my projects are built to run in real cloud environments.",
+              },
+              {
                 icon: "🔐",
                 title: "Security by Default",
                 desc: "Every project I ship has proper JWT auth, role-based access control, and Spring Security 6 integration — not bolted on after.",
@@ -533,11 +548,6 @@ export default function Portfolio() {
                 icon: "⚡",
                 title: "Performance Aware",
                 desc: "Redis caching, lazy-loaded JPA queries, and Kafka async processing — I write code that stays fast under load.",
-              },
-              {
-                icon: "🧹",
-                title: "Clean Code Discipline",
-                desc: "Modular, well-structured codebases with clear separation of concerns. Every repo has a proper README with architecture diagrams.",
               },
               {
                 icon: "📦",
@@ -578,7 +588,6 @@ export default function Portfolio() {
                 Looking for Java Full Stack Developer roles. Let's talk.
               </p>
 
-              {/* Visible email with mailto boilerplate */}
               <div style={{ marginBottom: 36, position: "relative" }}>
                 <a
                   href={MAILTO}
