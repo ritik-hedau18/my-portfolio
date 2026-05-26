@@ -81,7 +81,7 @@ const navLinks = ["About", "Skills", "Projects", "Highlights", "Contact"];
 const EMAIL = "ritikhedau9@gmail.com";
 const PHONE = "+91 88156 09602";
 const LOCATION = "Nagpur, India";
-const RESUME_PATH = "/Ritik_Hedau_Resume.pdf";
+//const RESUME_PATH = "/Ritik_Hedau_Resume.pdf";
 const GITHUB_URL = "https://github.com/ritik-hedau18";
 
 const MAILTO = `mailto:${EMAIL}?subject=Opportunity%20for%20Java%20Full%20Stack%20Developer&body=Hi%20Ritik%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20would%20love%20to%20connect%20regarding%20a%20Java%20Full%20Stack%20Developer%20opportunity.%0A%0ACompany%3A%20%5BYour%20Company%5D%0ARole%3A%20%5BPosition%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you.%0A%0ARegards%2C%0A%5BYour%20Name%5D`;
