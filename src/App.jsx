@@ -10,6 +10,7 @@ const projects = [
     tech: ["Spring Boot", "Spring AI", "Groq LLaMA 3.3", "Qdrant Vector DB", "React 19", "TypeScript", "PostgreSQL", "Docker"],
     github: "https://github.com/ritik-hedau18/NEXUS",
     hasGithub: true,
+    live: "https://nexus-ritik.netlify.app",
   },
   {
     name: "TRACE",
@@ -321,46 +322,76 @@ function ProjectCard({ p, index }) {
           ))}
         </div>
 
-        {p.hasGithub ? (
-          <a 
-            href={p.github} 
-            target="_blank" 
-            rel="noreferrer" 
-            style={{
+        <div style={{ display: "flex", gap: 24, flexWrap: "wrap", alignItems: "center" }}>
+          {p.hasGithub ? (
+            <a 
+              href={p.github} 
+              target="_blank" 
+              rel="noreferrer" 
+              style={{
+                display: "inline-flex", 
+                alignItems: "center", 
+                gap: 8,
+                color: "#06B6D4", 
+                textDecoration: "none", 
+                fontSize: "0.9rem", 
+                fontWeight: 500,
+                transition: "transform 0.2s ease"
+              }}
+              onMouseEnter={(e) => e.target.style.transform = "translateX(2px)"}
+              onMouseLeave={(e) => e.target.style.transform = "none"}
+            >
+              <Icons.Github />
+              <span>Explore Codebase</span>
+              <Icons.ExternalLink />
+            </a>
+          ) : (
+            <div style={{
               display: "inline-flex", 
               alignItems: "center", 
-              gap: 8,
-              color: "#06B6D4", 
-              textDecoration: "none", 
-              fontSize: "0.9rem", 
-              fontWeight: 500,
-              transition: "transform 0.2s ease"
-            }}
-            onMouseEnter={(e) => e.target.style.transform = "translateX(2px)"}
-            onMouseLeave={(e) => e.target.style.transform = "none"}
-          >
-            <Icons.Github />
-            <span>Explore Codebase</span>
-            <Icons.ExternalLink />
-          </a>
-        ) : (
-          <div style={{
-            display: "inline-flex", 
-            alignItems: "center", 
-            gap: 6,
-            color: "var(--text-muted)", 
-            fontSize: "0.85rem", 
-            fontStyle: "italic",
-            opacity: 0.75
-          }}>
-            <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 2 }}>
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <span>Currently Working / Repo Pushing Pending</span>
-          </div>
-        )}
+              gap: 6,
+              color: "var(--text-muted)", 
+              fontSize: "0.85rem", 
+              fontStyle: "italic",
+              opacity: 0.75
+            }}>
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 2 }}>
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>Currently Working / Repo Pushing Pending</span>
+            </div>
+          )}
+
+          {p.live && (
+            <a 
+              href={p.live} 
+              target="_blank" 
+              rel="noreferrer" 
+              style={{
+                display: "inline-flex", 
+                alignItems: "center", 
+                gap: 8,
+                color: "#10B981", 
+                textDecoration: "none", 
+                fontSize: "0.9rem", 
+                fontWeight: 500,
+                transition: "transform 0.2s ease"
+              }}
+              onMouseEnter={(e) => e.target.style.transform = "translateX(2px)"}
+              onMouseLeave={(e) => e.target.style.transform = "none"}
+            >
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+              <span>Live Project</span>
+              <Icons.ExternalLink />
+            </a>
+          )}
+        </div>
       </div>
     </FadeIn>
   );
