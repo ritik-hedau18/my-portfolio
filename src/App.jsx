@@ -273,15 +273,587 @@ const Icons = {
   )
 };
 
+function MatrixRain({ onClose }) {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let animationId;
+    
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const katakana = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const alphabet = katakana.split('');
+
+    const fontSize = 16;
+    const columns = Math.ceil(canvas.width / fontSize);
+
+    const rainDrops = [];
+    for (let x = 0; x < columns; x++) {
+      rainDrops[x] = 1;
+    }
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < rainDrops.length; i++) {
+        const text = alphabet[Math.floor(Math.random() * alphabet.length)];
+        ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+        if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          rainDrops[i] = 0;
+        }
+        rainDrops[i]++;
+      }
+    };
+
+    const interval = setInterval(draw, 30);
+
+    const timer = setTimeout(() => {
+      clearInterval(interval);
+      if (onClose) onClose();
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timer);
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, [onClose]);
+
+  return (
+    <canvas 
+      ref={canvasRef} 
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        zIndex: 9999,
+        pointerEvents: 'none',
+        opacity: 0.75
+      }}
+    />
+  );
+}
+
+function TerminalWidget({ onHack, onChangeTheme }) {
+  const [history, setHistory] = useState([
+    "Welcome to Ritik Hedau's Developer Console [Version 2.1.0]",
+    "Type 'help' to see list of available commands.",
+    ""
+  ]);
+  const [inputValue, setInputValue] = useState("");
+  const terminalBodyRef = useRef(null);
+
+  const executeCommand = (cmd) => {
+    const trimmed = cmd.trim().toLowerCase();
+    const args = trimmed.split(/\s+/);
+    const mainCommand = args[0];
+
+    let output = [];
+
+    switch (mainCommand) {
+      case "help":
+        output = [
+          "Available commands:",
+          "  help           Display this help listing",
+          "  skills         Print technical developer skill stack",
+          "  projects       Show consolidated completed projects",
+          "  theme <name>   Switch page theme (deepspace, matrix, cyberpunk)",
+          "  hack           Initiate simulation protocol",
+          "  clear          Clear console scroll buffer"
+        ];
+        break;
+      case "skills":
+        output = [
+          "Technical Stack:",
+          "  Backend:  Java 17/21, Spring Boot, Spring Security 6, Hibernate JPA",
+          "  Events:   Apache Kafka, Event-driven Messaging Architectures",
+          "  Data:     PostgreSQL, MongoDB, Redis Caching & Distributed Locks",
+          "  DevOps:   Docker & Docker Compose, Kubernetes Clusters, AWS Deployments",
+          "  Frontend: React 19, Redux, TypeScript, Tailwind CSS"
+        ];
+        break;
+      case "projects":
+        output = [
+          "Completed Projects:",
+          "  * NEXUS: AI Workspace Retrieval-Augmented Generation (RAG) platform",
+          "  * TRACE: Real-time FinTech Fraud Microservices & Kafka Pipeline",
+          "  * SRIJAN: Plain-English Spring Boot Code template Builder",
+          "  * FoodFlow: REST API food-delivery server with JWT Security",
+          "Type 'help' or explore cards below for interactive previews."
+        ];
+        break;
+      case "theme":
+        if (args[1] === "deepspace" || args[1] === "matrix" || args[1] === "cyberpunk") {
+          onChangeTheme(args[1]);
+          output = [`Theme changed successfully to: ${args[1]}`];
+        } else {
+          output = ["Usage: theme [deepspace | matrix | cyberpunk]"];
+        }
+        break;
+      case "hack":
+        onHack();
+        output = ["Initializing digital rain simulation protocol...", "Matrix hacking stream activated."];
+        break;
+      case "clear":
+        setHistory([]);
+        return;
+      case "":
+        output = [];
+        break;
+      default:
+        output = [`Command not found: ${mainCommand}. Type 'help' for suggestions.`];
+    }
+
+    setHistory(prev => [...prev, `ritik-portfolio $ ${cmd}`, ...output, ""]);
+  };
+
+  useEffect(() => {
+    if (terminalBodyRef.current) {
+      terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
+    }
+  }, [history]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    executeCommand(inputValue);
+    setInputValue("");
+  };
+
+  return (
+    <div className="terminal-window">
+      <div className="terminal-header">
+        <span className="terminal-button terminal-red"></span>
+        <span className="terminal-button terminal-yellow"></span>
+        <span className="terminal-button terminal-green"></span>
+        <span className="terminal-title">developer@ritik: ~</span>
+      </div>
+      <div className="terminal-body" ref={terminalBodyRef}>
+        {history.map((line, i) => (
+          <div key={i}>{line}</div>
+        ))}
+        <form onSubmit={handleSubmit} className="terminal-input-line">
+          <span className="terminal-prompt">$</span>
+          <input 
+            type="text" 
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="terminal-input-box"
+            autoFocus
+            autoComplete="off"
+            spellCheck="false"
+            placeholder="Type a command..."
+          />
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function InteractivePlayground({ name }) {
+  const [inputVal, setInputVal] = useState("");
+  const [logs, setLogs] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (name === "NEXUS") {
+      setLogs(["[SYSTEM] NEXUS AI active. Type a prompt (e.g. 'Summarize doc' or 'Explain database schema') to query doc index."]);
+    } else if (name === "TRACE") {
+      setLogs(["[SYSTEM] TRACE Risk Scoring ready. Click a trigger button to evaluate transactions via Spring Cloud microservices."]);
+    } else if (name === "SRIJAN") {
+      setLogs(["[SYSTEM] SRIJAN Code Engine online. Describe a Java class or endpoints to generate production code templates."]);
+    } else if (name === "FoodFlow") {
+      setLogs(["[SYSTEM] FoodFlow API ready. Select a mock route payload or trigger request parameters to test JWT auth flows."]);
+    }
+  }, [name]);
+
+  const runNexus = (query) => {
+    if (!query) return;
+    setLoading(true);
+    setLogs(prev => [...prev, `\nuser@nexus:~$ query "${query}"`]);
+    
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[INFO] Parsing uploaded PDF chunks...`]);
+    }, 400);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[INFO] Retrieved context similarity match: 0.941 (Qdrant index 4)`]);
+    }, 800);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[LLM] Streaming response via Server-Sent Events (SSE)...`]);
+    }, 1200);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `\nassistant@nexus:~$ Based on your documents, the system architecture utilizes Spring Security 6 stateless JWT tokens. NEXUS parses files and maps them to Qdrant vector spaces, resolving similarity indexes dynamically.\n[Source Citation: docs/security_spec.pdf#L42]`]);
+      setLoading(false);
+    }, 1800);
+  };
+
+  const runSrijan = (desc) => {
+    if (!desc) return;
+    setLoading(true);
+    setLogs(prev => [...prev, `\nuser@srijan:~$ generate "${desc}"`]);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[AI] Calling Groq LLaMA-3.3-70b code generator model...`]);
+    }, 400);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[COMPILER] Creating files and structuring Maven dependencies...`]);
+    }, 900);
+
+    setTimeout(() => {
+      const generatedCode = `\n// Generated file: PaymentController.java\n@RestController\n@RequestMapping("/api/payments")\npublic class PaymentController {\n\n    @Autowired\n    private PaymentService paymentService;\n\n    @PostMapping("/charge")\n    public ResponseEntity<PaymentResponse> charge(@RequestBody ChargeRequest req) {\n        PaymentResponse res = paymentService.process(req);\n        return ResponseEntity.ok(res);\n    }\n}`;
+      setLogs(prev => [...prev, generatedCode]);
+      setLoading(false);
+    }, 1600);
+  };
+
+  const triggerTrace = (isFraud) => {
+    setLoading(true);
+    setLogs(prev => [...prev, `\n[Kafka] Publishing transaction payload event...`]);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[Gateway] Route authenticated: JWT verified.`]);
+    }, 300);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `[Kafka] Event broker received payload at partition 2.`]);
+    }, 600);
+
+    setTimeout(() => {
+      if (isFraud) {
+        setLogs(prev => [
+          ...prev,
+          `[RuleEngine] Evaluating strategy rules (Velocity, Odd-Hour, Blacklist)...`,
+          `[Redis] Velocity violation detected: 5 txns in 2 mins from device DEV_83912.`,
+          `[MongoDB] Immutable audit log written for BLOCK event.`,
+          `\n[STATUS] TRANSACTION BLOCKED (Risk Score: 92/100)\nEmail Alert dispatched asynchronously via Kafka.`
+        ]);
+      } else {
+        setLogs(prev => [
+          ...prev,
+          `[RuleEngine] Strategy checks complete. Risk score: 8/100`,
+          `[MongoDB] Audit log entry created.`,
+          `\n[STATUS] TRANSACTION APPROVED (Approved instantly)`
+        ]);
+      }
+      setLoading(false);
+    }, 1200);
+  };
+
+  const runFoodFlow = (endpoint) => {
+    setLoading(true);
+    setLogs(prev => [...prev, `\nHTTP GET http://localhost:8080/api/v1${endpoint}`]);
+
+    setTimeout(() => {
+      setLogs(prev => [...prev, `Headers: { Authorization: "Bearer eyJhbGciOiJIUzI1NiJ9.ey..." }`]);
+    }, 300);
+
+    setTimeout(() => {
+      setLogs(prev => [
+        ...prev,
+        `[Security] JWT payload signature validated. Claims: { role: "CUSTOMER" }`,
+        `[Hibernate] Executing query: SELECT o FROM Order o WHERE o.user.id = :userId`,
+        `[PostgreSQL] Connection pool active (10ms query execution)`,
+        `\nResponse: 200 OK\n{\n  "status": "SUCCESS",\n  "data": {\n    "orderId": 9324,\n    "items": ["Garlic Bread", "Margherita Pizza"],\n    "total": 35.50,\n    "status": "PREPARING"\n  }\n}`
+      ]);
+      setLoading(false);
+    }, 1000);
+  };
+
+  const handleSend = (e) => {
+    e.preventDefault();
+    if (!inputVal.trim() || loading) return;
+    if (name === "NEXUS") {
+      runNexus(inputVal);
+    } else if (name === "SRIJAN") {
+      runSrijan(inputVal);
+    }
+    setInputVal("");
+  };
+
+  return (
+    <div className="playground-container">
+      <div style={{ fontSize: "0.85rem", color: "#06B6D4", fontFamily: "'Fira Code', monospace", marginBottom: 12, fontWeight: 500 }}>
+        // Interactive Live Demo & Simulator
+      </div>
+
+      {name === "TRACE" && (
+        <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
+          <button 
+            disabled={loading}
+            onClick={() => triggerTrace(false)} 
+            className="btn-primary" 
+            style={{ borderRadius: 6, padding: "8px 16px", fontSize: "0.85rem", background: "linear-gradient(135deg, #10B981 0%, #059669 100%)", boxShadow: "none" }}
+          >
+            Trigger Approved Txn
+          </button>
+          <button 
+            disabled={loading}
+            onClick={() => triggerTrace(true)} 
+            className="btn-primary" 
+            style={{ borderRadius: 6, padding: "8px 16px", fontSize: "0.85rem", background: "linear-gradient(135deg, #EF4444 0%, #DC2626 100%)", boxShadow: "none" }}
+          >
+            Trigger Fraud Txn
+          </button>
+        </div>
+      )}
+
+      {name === "FoodFlow" && (
+        <div style={{ display: "flex", gap: 12, marginBottom: 16 }}>
+          {["/orders/history", "/cart/items", "/profile"].map(route => (
+            <button 
+              key={route}
+              disabled={loading}
+              onClick={() => runFoodFlow(route)}
+              className="btn-secondary"
+              style={{ borderRadius: 6, padding: "6px 14px", fontSize: "0.8rem" }}
+            >
+              GET {route}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {(name === "NEXUS" || name === "SRIJAN") && (
+        <form onSubmit={handleSend} style={{ display: "flex", gap: 8 }}>
+          <input 
+            type="text" 
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+            placeholder={name === "NEXUS" ? "Ask a question about database security..." : "Explain requirement, e.g. 'Build Payment Service'..."}
+            className="playground-input"
+            disabled={loading}
+          />
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="btn-primary" 
+            style={{ borderRadius: 6, padding: "8px 16px", height: "38px", fontSize: "0.85rem" }}
+          >
+            Send
+          </button>
+        </form>
+      )}
+
+      <div className="playground-console">
+        {logs.map((log, i) => (
+          <div key={i} style={{ color: log.startsWith("\nuser") ? "#3B82F6" : log.includes("STATUS") || log.includes("assistant") || log.includes("Response") ? "#06B6D4" : "#4ADE80" }}>
+            {log}
+          </div>
+        ))}
+        {loading && <div style={{ color: "#06B6D4", animation: "pulse-slow 1s infinite" }}>System processing...</div>}
+      </div>
+    </div>
+  );
+}
+
+function ArchitectureVisualizer({ name }) {
+  // Arrow Markers
+  const Markers = () => (
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="rgba(243, 244, 246, 0.2)" />
+      </marker>
+      <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#06B6D4" />
+      </marker>
+      <marker id="arrow-indigo" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#6366F1" />
+      </marker>
+    </defs>
+  );
+
+  const renderNode = (x, y, title, subtitle) => {
+    const w = 95;
+    const h = 50;
+    return (
+      <g key={title}>
+        <rect 
+          x={x - w/2} 
+          y={y - h/2} 
+          width={w} 
+          height={h} 
+          rx={8} 
+          className="arch-node"
+        />
+        <text x={x} y={y - 2} className="arch-text-title">{title}</text>
+        <text x={x} y={y + 14} className="arch-text-subtitle">{subtitle}</text>
+      </g>
+    );
+  };
+
+  if (name === "NEXUS") {
+    return (
+      <div className="arch-container">
+        <div style={{ fontSize: "0.85rem", color: "#06B6D4", fontFamily: "'Fira Code', monospace", marginBottom: 12, fontWeight: 500 }}>
+          // RAG Pipeline & Similarity Search Flow
+        </div>
+        <svg viewBox="0 0 660 120" style={{ width: "100%", height: "auto" }}>
+          <Markers />
+          {/* Paths */}
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 552.5 50 Q 470 20 387.5 50" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 552.5 50 Q 470 20 387.5 50" className="arch-flow-pulse-indigo" markerEnd="url(#arrow-indigo)" />
+          
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 527.5 60 L 552.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 527.5 60 L 552.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+
+          {/* Nodes */}
+          {renderNode(60, 60, "Doc Ingestion", "PDF / DOCX")}
+          {renderNode(200, 60, "Jina AI API", "Embedding Model")}
+          {renderNode(340, 60, "Qdrant DB", "Vector Index")}
+          {renderNode(480, 60, "Groq LLaMA", "RAG LLM Engine")}
+          {renderNode(600, 60, "SSE Chat UI", "User Session")}
+        </svg>
+      </div>
+    );
+  }
+
+  if (name === "TRACE") {
+    return (
+      <div className="arch-container">
+        <div style={{ fontSize: "0.85rem", color: "#06B6D4", fontFamily: "'Fira Code', monospace", marginBottom: 12, fontWeight: 500 }}>
+          // Real-time Event-Driven Fraud Analysis
+        </div>
+        <svg viewBox="0 0 660 120" style={{ width: "100%", height: "auto" }}>
+          <Markers />
+          {/* Paths */}
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 387.5 70 Q 470 100 552.5 70" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 387.5 70 Q 470 100 552.5 70" className="arch-flow-pulse-indigo" markerEnd="url(#arrow-indigo)" />
+
+          {/* Nodes */}
+          {renderNode(60, 60, "Client Txn", "HTTP Payload")}
+          {renderNode(200, 60, "API Gateway", "Spring Cloud")}
+          {renderNode(340, 60, "Kafka Broker", "Event Pipeline")}
+          {renderNode(480, 60, "Rule Engine", "Strategy + Redis")}
+          {renderNode(600, 60, "Audit Service", "MongoDB Store")}
+        </svg>
+      </div>
+    );
+  }
+
+  if (name === "SRIJAN") {
+    return (
+      <div className="arch-container">
+        <div style={{ fontSize: "0.85rem", color: "#06B6D4", fontFamily: "'Fira Code', monospace", marginBottom: 12, fontWeight: 500 }}>
+          // Natural Language to Spring Boot Project Compilation
+        </div>
+        <svg viewBox="0 0 660 120" style={{ width: "100%", height: "auto" }}>
+          <Markers />
+          {/* Paths */}
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+
+          <path d="M 527.5 60 L 552.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 527.5 60 L 552.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+
+          {/* Nodes */}
+          {renderNode(60, 60, "User Prompt", "Natural English")}
+          {renderNode(200, 60, "Spring AI", "LLaMA 3 API")}
+          {renderNode(340, 60, "Parser Engine", "JSON Structuring")}
+          {renderNode(480, 60, "Monaco Editor", "Live Code Preview")}
+          {renderNode(600, 60, "ZIP Generator", "Template Builder")}
+        </svg>
+      </div>
+    );
+  }
+
+  if (name === "FoodFlow") {
+    return (
+      <div className="arch-container">
+        <div style={{ fontSize: "0.85rem", color: "#06B6D4", fontFamily: "'Fira Code', monospace", marginBottom: 12, fontWeight: 500 }}>
+          // RESTful API Endpoint Security & DB Mapping Flow
+        </div>
+        <svg viewBox="0 0 660 120" style={{ width: "100%", height: "auto" }}>
+          <Markers />
+          {/* Paths */}
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 107.5 60 L 152.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 247.5 60 L 292.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+          
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 387.5 60 L 432.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+
+          <path d="M 527.5 60 L 552.5 60" className="arch-flow-line" markerEnd="url(#arrow)" />
+          <path d="M 527.5 60 L 552.5 60" className="arch-flow-pulse" markerEnd="url(#arrow-cyan)" />
+
+          {/* Nodes */}
+          {renderNode(60, 60, "REST Call", "Client Request")}
+          {renderNode(200, 60, "JWT Filter", "Spring Security 6")}
+          {renderNode(340, 60, "Controller Layer", "Endpoints & DTOs")}
+          {renderNode(480, 60, "Hibernate ORM", "JPA Entity Mapping")}
+          {renderNode(600, 60, "PostgreSQL", "Relational Database")}
+        </svg>
+      </div>
+    );
+  }
+
+  return null;
+}
+
 // Project Card component
 function ProjectCard({ p, index }) {
   const [hovered, setHovered] = useState(false);
+  const [expandedPanel, setExpandedPanel] = useState(null); // null | "architecture" | "playground"
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <FadeIn delay={index * 0.08}>
       <div
+        onMouseMove={handleMouseMove}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="glass-panel"
+        className="glass-panel glass-panel-glow"
         style={{
           borderRadius: 16,
           padding: "32px",
@@ -391,7 +963,49 @@ function ProjectCard({ p, index }) {
               <Icons.ExternalLink />
             </a>
           )}
+
+          {p.hasGithub && (
+            <div style={{ display: "flex", gap: 10, marginLeft: "auto" }}>
+              <button
+                onClick={() => setExpandedPanel(expandedPanel === "architecture" ? null : "architecture")}
+                className="btn-arch-toggle"
+                style={{
+                  background: expandedPanel === "architecture" ? "rgba(6, 182, 212, 0.08)" : "rgba(6, 182, 212, 0.04)",
+                  borderColor: expandedPanel === "architecture" ? "var(--accent-cyan)" : "rgba(6, 182, 212, 0.12)"
+                }}
+              >
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+                <span>Architecture</span>
+              </button>
+
+              <button
+                onClick={() => setExpandedPanel(expandedPanel === "playground" ? null : "playground")}
+                className="btn-arch-toggle"
+                style={{
+                  background: expandedPanel === "playground" ? "rgba(6, 182, 212, 0.08)" : "rgba(6, 182, 212, 0.04)",
+                  borderColor: expandedPanel === "playground" ? "var(--accent-cyan)" : "rgba(6, 182, 212, 0.12)"
+                }}
+              >
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                <span>Playground</span>
+              </button>
+            </div>
+          )}
         </div>
+
+        {p.hasGithub && expandedPanel === "architecture" && (
+          <ArchitectureVisualizer name={p.name} />
+        )}
+
+        {p.hasGithub && expandedPanel === "playground" && (
+          <InteractivePlayground name={p.name} />
+        )}
       </div>
     </FadeIn>
   );
@@ -440,11 +1054,20 @@ function SkillGroup({ group, items, index }) {
 // Value Highlight Card component
 function HighlightCard({ item }) {
   const [hovered, setHovered] = useState(false);
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <div
+      onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="glass-panel"
+      className="glass-panel glass-panel-glow"
       style={{
         borderRadius: 16,
         padding: "32px",
@@ -468,6 +1091,12 @@ export default function Portfolio() {
   const active = useScrollSpy();
   const [copied, setCopied] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [theme, setTheme] = useState("deepspace"); // deepspace, matrix, cyberpunk
+  const [isHacking, setIsHacking] = useState(false);
+
+  useEffect(() => {
+    document.body.className = theme === "deepspace" ? "" : `theme-${theme}`;
+  }, [theme]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -513,9 +1142,11 @@ export default function Portfolio() {
       desc: "I focus on maintainable, production-ready code. Writing unit tests (JUnit, Mockito), working in Agile environments, and setting up Docker are part of my daily practices.",
     }
   ];
-
   return (
     <div style={{ minHeight: "100vh", position: "relative", overflowX: "hidden" }}>
+      {/* Matrix Hacking Overlay */}
+      {isHacking && <MatrixRain onClose={() => setIsHacking(false)} />}
+
       {/* Decorative Blur Background Blobs */}
       <div className="floating-blob blob-cyan" style={{ top: "10%", right: "-5%", width: "50%", aspectRatio: "1" }} />
       <div className="floating-blob blob-indigo" style={{ bottom: "20%", left: "-10%", width: "40%", aspectRatio: "1" }} />
@@ -552,16 +1183,32 @@ export default function Portfolio() {
             </button>
           ))}
         </div>
-        <a 
-          href={GITHUB_URL} 
-          target="_blank" 
-          rel="noreferrer" 
-          className="btn-secondary" 
-          style={{ borderRadius: 8, padding: "8px 16px", fontSize: "0.85rem" }}
-        >
-          <Icons.Github />
-          <span>GitHub</span>
-        </a>
+
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <button 
+            onClick={() => {
+              const themes = ["deepspace", "matrix", "cyberpunk"];
+              const nextIdx = (themes.indexOf(theme) + 1) % themes.length;
+              setTheme(themes[nextIdx]);
+            }}
+            className="btn-theme-selector"
+            style={{ fontFamily: "'Fira Code', monospace" }}
+          >
+            <span>🎨 Theme:</span>
+            <span style={{ color: "var(--accent-cyan)", textTransform: "capitalize", fontWeight: 600 }}>{theme}</span>
+          </button>
+          
+          <a 
+            href={GITHUB_URL} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="btn-secondary" 
+            style={{ borderRadius: 8, padding: "8px 16px", fontSize: "0.85rem" }}
+          >
+            <Icons.Github />
+            <span>GitHub</span>
+          </a>
+        </div>
       </nav>
 
       {/* HERO SECTION */}
@@ -569,76 +1216,87 @@ export default function Portfolio() {
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
-        padding: "100px 6% 60px",
+        padding: "120px 6% 60px",
         position: "relative",
         zIndex: 2,
       }}>
-        <div style={{ maxWidth: 840 }}>
-          {/* Status Badge */}
-          <div style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            background: "rgba(6, 182, 212, 0.08)",
-            border: "1px solid rgba(6, 182, 212, 0.2)",
-            borderRadius: 24,
-            padding: "6px 16px",
-            fontSize: "0.85rem",
-            color: "#06B6D4",
-            marginBottom: 28,
-            fontFamily: "'Fira Code', monospace",
-          }}>
-            <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#06B6D4", display: "inline-block", animation: "pulse-slow 2s infinite" }} />
-            Open to Opportunities
+        <div className="hero-grid" style={{ 
+          display: "grid", 
+          gridTemplateColumns: "1.2fr 1fr", 
+          gap: 64, 
+          width: "100%", 
+          alignItems: "center" 
+        }}>
+          <div>
+            {/* Status Badge */}
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              background: "rgba(6, 182, 212, 0.08)",
+              border: "1px solid rgba(6, 182, 212, 0.2)",
+              borderRadius: 24,
+              padding: "6px 16px",
+              fontSize: "0.85rem",
+              color: "#06B6D4",
+              marginBottom: 28,
+              fontFamily: "'Fira Code', monospace",
+            }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#06B6D4", display: "inline-block", animation: "pulse-slow 2s infinite" }} />
+              Open to Opportunities
+            </div>
+
+            <h1 style={{
+              fontSize: "clamp(36px, 5.5vw, 68px)",
+              fontWeight: 800,
+              lineHeight: 1.05,
+              margin: "0 0 16px",
+              letterSpacing: "-2.5px",
+            }}>
+              Engineering Scalable<br />
+              <span className="text-gradient">Full-Stack Applications</span>
+            </h1>
+
+            <p style={{
+              fontSize: "clamp(18px, 2.5vw, 24px)",
+              fontWeight: 400,
+              color: "var(--text-muted)",
+              marginBottom: 24,
+              fontFamily: "'Outfit', sans-serif"
+            }}>
+              I'm <span style={{ color: "var(--text)", fontWeight: 500 }}>Ritik Hedau</span>, a <TypedText texts={["Java Full Stack Developer", "Full Stack Software Engineer", "AI/RAG Integrator"]} />
+            </p>
+
+            <p style={{
+              fontSize: "1.05rem",
+              lineHeight: 1.75,
+              color: "var(--text-muted)",
+              maxWidth: 620,
+              marginBottom: 44,
+            }}>
+              Specialized in crafting secure multi-tenant microservices, event-driven backends, and modular React UIs. I bridge server reliability with fluid interface architecture, creating production-grade applications that scale.
+            </p>
+
+            <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+              <button onClick={() => scrollTo("projects")} className="btn-primary" style={{ borderRadius: 8, padding: "12px 28px", fontSize: "0.95rem" }}>
+                <span>Explore Projects</span>
+                <span>→</span>
+              </button>
+              <a href={RESUME_PATH} download="Ritik_Hedau_Resume.pdf" className="btn-secondary" style={{ borderRadius: 8, padding: "12px 28px", fontSize: "0.95rem", textDecoration: "none" }}>
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Download Resume</span>
+              </a>
+              <button onClick={() => scrollTo("contact")} className="btn-secondary" style={{ borderRadius: 8, padding: "12px 28px", fontSize: "0.95rem" }}>
+                <span>Let's Connect</span>
+              </button>
+            </div>
           </div>
-
-          <h1 style={{
-            fontSize: "clamp(42px, 6vw, 76px)",
-            fontWeight: 800,
-            lineHeight: 1.05,
-            margin: "0 0 16px",
-            letterSpacing: "-2.5px",
-          }}>
-            Engineering Scalable<br />
-            <span className="text-gradient">Full-Stack Applications</span>
-          </h1>
-
-          <p style={{
-            fontSize: "clamp(18px, 2.5vw, 24px)",
-            fontWeight: 400,
-            color: "var(--text-muted)",
-            marginBottom: 24,
-            fontFamily: "'Outfit', sans-serif"
-          }}>
-            I'm <span style={{ color: "var(--text)", fontWeight: 500 }}>Ritik Hedau</span>, a <TypedText texts={["Java Full Stack Developer", "Full Stack Software Engineer", "AI/RAG Integrator"]} />
-          </p>
-
-          <p style={{
-            fontSize: "1.05rem",
-            lineHeight: 1.75,
-            color: "var(--text-muted)",
-            maxWidth: 620,
-            marginBottom: 44,
-          }}>
-            Specialized in crafting secure multi-tenant microservices, event-driven backends, and modular React UIs. I bridge server reliability with fluid interface architecture, creating production-grade applications that scale.
-          </p>
-
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <button onClick={() => scrollTo("projects")} className="btn-primary" style={{ borderRadius: 8, padding: "12px 28px", fontSize: "0.95rem" }}>
-              <span>Explore Projects</span>
-              <span>→</span>
-            </button>
-            <a href={RESUME_PATH} download="Ritik_Hedau_Resume.pdf" className="btn-secondary" style={{ borderRadius: 8, padding: "12px 28px", fontSize: "0.95rem", textDecoration: "none" }}>
-              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: 4 }}>
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              <span>Download Resume</span>
-            </a>
-            <button onClick={() => scrollTo("contact")} className="btn-secondary" style={{ borderRadius: 8, padding: "12px 28px", fontSize: "0.95rem" }}>
-              <span>Let's Connect</span>
-            </button>
+          <div>
+            <TerminalWidget onHack={() => { setIsHacking(true); setTheme("matrix"); }} onChangeTheme={setTheme} />
           </div>
         </div>
       </section>
