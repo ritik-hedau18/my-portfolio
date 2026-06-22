@@ -41,6 +41,7 @@ const projects = [
     tech: ["Spring Boot", "Redis Distributed Locks", "2FA TOTP", "AES-256-GCM", "PostgreSQL", "MongoDB", "Quartz Scheduler", "React 19"],
     github: "https://github.com/ritik-hedau18/VAULT",
     hasGithub: true,
+    live: "https://vaultbyritik.vercel.app",
     problem: "FinTech ledgers are vulnerable to double-spending concurrency bugs, unauthorized account breaches, and data corruption in automated scheduled cron routines.",
     solution: "Engineered a secure ledger database using Redis (Redisson) distributed locks and JPA pessimistic database locks to force strict transactional isolation. Integrated TOTP-based 2FA, encrypted balances, and scheduled daily interest calculations via Quartz.",
     impact: [
