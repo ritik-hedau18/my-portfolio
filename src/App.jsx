@@ -33,6 +33,27 @@ const projects = [
     }
   },
   {
+    name: "VAULT",
+    logo: vaultLogo,
+    full: "Secure Digital Banking & Ledger Engine",
+    tag: "FinTech Ledger",
+    desc: "Secure banking transaction engine. Utilizes Redis distributed locks and database locks to prevent double-spending, database field-level encryption, Google Authenticator (TOTP) 2FA, and Quartz-scheduled interest jobs.",
+    tech: ["Spring Boot", "Redis Distributed Locks", "2FA TOTP", "AES-256-GCM", "PostgreSQL", "MongoDB", "Quartz Scheduler", "React 19"],
+    github: "https://github.com/ritik-hedau18/VAULT",
+    hasGithub: true,
+    problem: "FinTech ledgers are vulnerable to double-spending concurrency bugs, unauthorized account breaches, and data corruption in automated scheduled cron routines.",
+    solution: "Engineered a secure ledger database using Redis (Redisson) distributed locks and JPA pessimistic database locks to force strict transactional isolation. Integrated TOTP-based 2FA, encrypted balances, and scheduled daily interest calculations via Quartz.",
+    impact: [
+      "Blocked 100% of double-spending attempts in multi-threaded race condition tests.",
+      "Protected user balances with field-level AES-GCM encryption.",
+      "Quartz system processed 50,000+ recurring interest calculations daily without error."
+    ],
+    deepDive: {
+      title: "Redisson Distributed Locks",
+      detail: "Wraps financial ledger updates in Redisson distributed locks with a lease-time watchdog. This guarantees mutual exclusion across microservice nodes and auto-releases locks if a node fails mid-transaction."
+    }
+  },
+  {
     name: "TRACE",
     logo: traceLogo,
     full: "Transaction Risk & Anomaly Classification Engine",
@@ -76,13 +97,13 @@ const projects = [
     }
   },
   {
-    name: "FoodFlow",
+    name: "BITECRAFT",
     logo: foodflowLogo,
     full: "Full-Stack Food Delivery Application",
     tag: "Spring Boot + React",
-    desc: "Production-ready full-stack food delivery application. Features an optimized Spring Boot 3 REST API paired with a responsive React dashboard. Supports complete order lifecycles, lazy-load database query optimizations, real-time cart state synchronization, and role-based JWT authentication.",
+    desc: "Production-ready full-stack food delivery application (Zomato/Swiggy-style). Features an optimized Spring Boot 3 REST API paired with a responsive React dashboard. Supports complete order lifecycles, lazy-load database query optimizations, real-time cart state synchronization, and role-based JWT authentication.",
     tech: ["Spring Boot 3", "React 19", "Redux Toolkit", "PostgreSQL", "Spring Security", "JWT", "Hibernate / JPA", "Tailwind CSS", "JUnit & Mockito"],
-    github: "https://github.com/ritik-hedau18/food-delivery-backend",
+    github: "https://github.com/ritik-hedau18/Bitecraft",
     hasGithub: true,
     problem: "E-commerce databases struggle under dense menu reads and volatile cart writes, while frontend cart state can easily fall out of sync with backend transactional bounds during concurrent actions.",
     solution: "Developed a secure full-stack platform using Spring Boot 3 and React 19. Designed a Redux Toolkit state machine for local cart management, synchronizing asynchronously with optimized Hibernate databases using join-fetching to resolve N+1 queries.",
@@ -136,27 +157,6 @@ const projects = [
     deepDive: {
       title: "Horizontal WebSocket Scaling",
       detail: "Uses a Redis Pub/Sub backplane to synchronize messaging across multiple stateless WebSocket instances. Users connected to separate servers can exchange real-time STOMP packets seamlessly."
-    }
-  },
-  {
-    name: "VAULT",
-    logo: vaultLogo,
-    full: "Secure Digital Banking & Ledger Engine",
-    tag: "FinTech Ledger",
-    desc: "Secure banking transaction engine. Utilizes Redis distributed locks and database locks to prevent double-spending, database field-level encryption, Google Authenticator (TOTP) 2FA, and Quartz-scheduled interest jobs.",
-    tech: ["Spring Boot", "Redis Distributed Locks", "2FA TOTP", "AES-256-GCM", "PostgreSQL", "MongoDB", "Quartz Scheduler", "React 19"],
-    github: "",
-    hasGithub: false,
-    problem: "FinTech ledgers are vulnerable to double-spending concurrency bugs, unauthorized account breaches, and data corruption in automated scheduled cron routines.",
-    solution: "Engineered a secure ledger database using Redis (Redisson) distributed locks and JPA pessimistic database locks to force strict transactional isolation. Integrated TOTP-based 2FA, encrypted balances, and scheduled daily interest calculations via Quartz.",
-    impact: [
-      "Blocked 100% of double-spending attempts in multi-threaded race condition tests.",
-      "Protected user balances with field-level AES-GCM encryption.",
-      "Quartz system processed 50,000+ recurring interest calculations daily without error."
-    ],
-    deepDive: {
-      title: "Redisson Distributed Locks",
-      detail: "Wraps financial ledger updates in Redisson distributed locks with a lease-time watchdog. This guarantees mutual exclusion across microservice nodes and auto-releases locks if a node fails mid-transaction."
     }
   }
 ];
