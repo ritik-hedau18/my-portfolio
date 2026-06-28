@@ -199,7 +199,7 @@ export const experience = {
 export const EMAIL = "ritikhedau9@gmail.com";
 export const PHONE = "+91 82695 19161";
 export const LOCATION = "Pune, India";
-export const RESUME_LINK = "https://drive.google.com/file/d/13466HLBk5Fp_itP2wnnt0nwjD-TY48lT/view?usp=drivesdk";
+export const RESUME_LINK = "https://drive.google.com/file/d/17rvXkMDBv--HEKdW-7kz1vQ9TH8-KNpp/view?usp=drivesdk";
 export const GITHUB_URL = "https://github.com/ritik-hedau18";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/ritik-hedau/";
 
